@@ -162,6 +162,16 @@ main { padding-top: 64px; }
   border: 1.5px solid rgba(56,189,248,0.4);
 }
 .btn-outline:hover { border-color: var(--sky); background: rgba(56,189,248,0.08); }
+/* ✅ Correct — cache les liens desktop sur mobile */
+.desktop-nav {
+  display: flex;
+}
+
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none; /* ← cache sur mobile */
+  }
+}
 
 /* Section divider */
 .divider {
