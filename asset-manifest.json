@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/soa-razakamboly-portfolio.github.io/static/css/main.e5de905c.css",
-    "main.js": "/soa-razakamboly-portfolio.github.io/static/js/main.92386634.js",
+    "main.css": "/soa-razakamboly-portfolio.github.io/static/css/main.ab3c6764.css",
+    "main.js": "/soa-razakamboly-portfolio.github.io/static/js/main.149a1173.js",
     "index.html": "/soa-razakamboly-portfolio.github.io/index.html",
-    "main.e5de905c.css.map": "/soa-razakamboly-portfolio.github.io/static/css/main.e5de905c.css.map",
-    "main.92386634.js.map": "/soa-razakamboly-portfolio.github.io/static/js/main.92386634.js.map"
+    "main.ab3c6764.css.map": "/soa-razakamboly-portfolio.github.io/static/css/main.ab3c6764.css.map",
+    "main.149a1173.js.map": "/soa-razakamboly-portfolio.github.io/static/js/main.149a1173.js.map"
   },
   "entrypoints": [
-    "static/css/main.e5de905c.css",
-    "static/js/main.92386634.js"
+    "static/css/main.ab3c6764.css",
+    "static/js/main.149a1173.js"
   ]
 }
