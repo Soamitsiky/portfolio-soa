@@ -24,7 +24,7 @@ export default function Contact() {
   return (
     <div className="page" style={{ position: "relative", zIndex: 1 }}>
       <div className="page-header">
-        <div className="page-label">// Contact</div>
+       
         <h1 className="page-title">Travaillons ensemble</h1>
         <p className="page-subtitle">Je recherche une alternance à partir de septembre 2026 dans les Hauts-de-France.</p>
       </div>
@@ -36,7 +36,6 @@ export default function Contact() {
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2rem" }}>
             {[
               { icon: "✉️", label: "Email", value: profile.email, href: `mailto:${profile.email}` },
-              {/*{ icon: "📱", label: "Téléphone", value: profile.phone, href: `tel:+33781045287` },*/},
               { icon: "💼", label: "LinkedIn", value: "Voir mon profil", href: profile.linkedin },
               { icon: "📍", label: "Localisation", value: profile.location, href: null },
             ].map(c => (
@@ -68,8 +67,8 @@ export default function Contact() {
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               {[
-                { key: "name", label: "Votre nom", type: "text", placeholder: "Jean Dupont" },
-                { key: "email", label: "Votre email", type: "email", placeholder: "jean@exemple.com" },
+                { key: "name", label: "Votre nom", type: "text", placeholder: "Nom et prénom" },
+                { key: "email", label: "Votre email", type: "email", placeholder: "nom@exemple.com" },
               ].map(f => (
                 <div key={f.key}>
                   <label style={{ fontSize: "0.78rem", color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "0.4rem" }}>{f.label}</label>

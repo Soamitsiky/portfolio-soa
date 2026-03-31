@@ -16,6 +16,13 @@
   --grad2: linear-gradient(135deg, #38BDF8, #34D399);
   --font: 'Outfit', sans-serif;
   --mono: 'JetBrains Mono', monospace;
+  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+  --text-hero: clamp(2.5rem,   0.5rem  + 5vw,    5rem);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,6 +57,21 @@ main { padding-top: 64px; }
   line-height: 1.1;
 }
 .page-subtitle { color: var(--muted); font-size: 1rem; margin-top: 0.75rem; line-height: 1.7; }
+.page {
+  padding: clamp(1rem, 5vw, 4rem);
+}
+.page {
+  max-width: 1200px;
+  margin: 0 auto;           /* ← centrage horizontal */
+  padding: 0 clamp(1rem, 5vw, 4rem);  /* ← marges latérales fluides */
+  width: 100%;
+}
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 5vw, 4rem);
+  width: 100%;
+}
 
 /* Cards */
 .card {
@@ -183,7 +205,7 @@ main { padding-top: 64px; }
 
 /* Animated gradient text */
 .gradient-animate {
-  background: linear-gradient(270deg, #38BDF8, #818CF8, #34D399, #F472B6, #38BDF8);
+  background: linear-gradient(270deg, #38BDF8, #7b85e0, #34D399, #F472B6, #38BDF8);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -203,6 +225,20 @@ main { padding-top: 64px; }
 /* Grid layouts */
 .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
 .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+
+/* ✅ Grille responsive pour tes cards */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: 1.5rem;
+}
+
+/* ✅ Hero en colonne sur mobile */
+@media (max-width: 768px) {
+  section[style*="grid"] {
+    grid-template-columns: 1fr !important;
+  }
+}
 
 /* Timeline */
 .timeline { position: relative; padding-left: 2.5rem; }

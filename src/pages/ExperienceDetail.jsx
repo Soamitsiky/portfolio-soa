@@ -13,7 +13,7 @@ export default function ExperienceDetail() {
       <div style={{ marginBottom: "2.5rem" }}>
         <div className="page-label">// {exp.type}</div>
         <h1 style={{ fontFamily: "var(--font)", fontWeight: 800, fontSize: "clamp(1.8rem, 4vw, 3rem)", color: exp.color, marginBottom: "0.4rem" }}>{exp.title}</h1>
-        <div style={{ fontSize: "1.1rem", color: "var(--muted)", marginBottom: "1rem" }}>{exp.company}</div>
+        <div style={{ fontSize: "2rem", color: "#00D4AA", marginBottom: "1rem" }}>{exp.company}</div>
         <span style={{
           fontFamily: "var(--mono)", fontSize: "0.78rem", padding: "0.3rem 1rem",
           borderRadius: 20, background: `${exp.color}18`, color: exp.color, border: `1px solid ${exp.color}33`,
@@ -24,7 +24,7 @@ export default function ExperienceDetail() {
 
       {/* Missions */}
       <div style={{ marginBottom: "3rem" }}>
-        <div className="page-label" style={{ marginBottom: "1.5rem" }}>// Missions</div>
+       
         {exp.missions.map((m, i) => (
           <div key={i} className="card" style={{ marginBottom: "1.2rem", borderLeft: `3px solid ${exp.color}` }}>
             <h3 style={{ fontFamily: "var(--font)", fontWeight: 700, fontSize: "0.95rem", color: exp.color, marginBottom: "0.9rem" }}>{m.title}</h3>
@@ -41,7 +41,7 @@ export default function ExperienceDetail() {
 
       {/* Technologies */}
       <div>
-        <div className="page-label" style={{ marginBottom: "1rem" }}>// Technologies utilisées</div>
+        <div className="page-label" style={{ marginBottom: "1rem" }}>Technologies utilisées</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
           {exp.technologies.map(t => (
             <span key={t} style={{

@@ -1,3 +1,13 @@
 #nav-menu.open {
   transform: translateX(0) !important;
 }
+/* ✅ */
+html, body {
+  min-height: 100%;
+  background-color: #0a0e1a; /* ta couleur de fond sombre */
+}
+
+#root {
+  min-height: 100vh;
+  background-color: #0a0e1a;
+}
