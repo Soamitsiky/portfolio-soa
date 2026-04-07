@@ -45,14 +45,14 @@ export default function Navbar() {
         display: "flex", alignItems: "center",
         justifyContent: "space-between",
         padding: "0 5vw",
-      }}>z
+      }}>
         {/* Logo */}
         <Link to="/" style={{
           fontFamily: "var(--mono)", fontWeight: 700, fontSize: "1rem",
           color: "var(--sky)", textDecoration: "none", marginRight: "auto",
           letterSpacing: "0.05em",
         }}>
-          soa<span style={{ color: "var(--lilac)" }}>.</span>dev
+          Soa<span style={{ color: "var(--lilac)" }}></span>R
         </Link>
 
         {/* Desktop links */}
