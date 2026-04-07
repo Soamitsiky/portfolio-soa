@@ -1,24 +1,33 @@
 import { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
 import { profile } from "../data/data";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("revealed"); obs.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
     if (!form.name || !form.email || !form.message) return;
-    const subject = `Message depuis portfolio — ${form.name}`;
-    const body = `Nom : ${form.name}\nEmail : ${form.email}\n\nMessage :\n${form.message}`;
-    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    setLoading(true);
+
+    emailjs.send(
+             import.meta.env.VITE_EMAILJS_SERVICE_ID,
+  import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+  {
+    from_name:  form.name,
+    from_email: form.email,
+    message:    form.message,
+  },
+  import.meta.env.VITE_EMAILJS_PUBLIC_KEY // ← remplace
+    ).then(() => {
+      setSent(true);
+      setLoading(false);
+    }).catch((error) => {
+      console.error("EmailJS error:", error);
+      alert("Erreur lors de l'envoi, réessaie.");
+      setLoading(false);
+    });
   };
 
   return (
@@ -61,10 +70,28 @@ export default function Contact() {
 
           {sent ? (
             <div style={{ textAlign: "center", padding: "2rem" }}>
-              <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>✅</div>
-              <p style={{ color: "var(--green)", fontWeight: 600 }}>Message envoyé !</p>
-            </div>
+    <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>✅</div>
+    <p style={{ color: "var(--green)", fontWeight: 600 }}>Message envoyé !</p>
+    <button
+      onClick={() => {
+        setSent(false);
+        setForm({ name: "", email: "", message: "" });
+      }}
+      style={{
+        marginTop: "1rem",
+        color: "var(--sky)",
+        background: "none",
+        border: "1px solid var(--sky)",
+        padding: "0.5rem 1rem",
+        borderRadius: "8px",
+        cursor: "pointer"
+      }}
+    >
+      Envoyer un autre message
+    </button>
+  </div>
           ) : (
+
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               {[
                 { key: "name", label: "Votre nom", type: "text", placeholder: "Nom et prénom" },
@@ -102,8 +129,10 @@ export default function Contact() {
                 />
                 
               </div>
-              <button onClick={handleSubmit} className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }}>
-                Envoyer →
+              <button onClick={handleSubmit} className="btn btn-primary" 
+              style={{ width: "100%", justifyContent: "center" }}
+              disabled={loading}>
+              {loading ? "Envoi en cours..." : "Envoyer →"}
               </button>
             </div>
           )}
