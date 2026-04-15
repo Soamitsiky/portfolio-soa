@@ -1,113 +1,187 @@
-import { useState, useEffect } from "react";
-import { profile } from "../data/data";
+import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
+  const formRef = useRef();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("revealed"); obs.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  const handleSubmit = () => {
-    if (!form.name || !form.email || !form.message) return;
-    const subject = `Message depuis portfolio — ${form.name}`;
-    const body = `Nom : ${form.name}\nEmail : ${form.email}\n\nMessage :\n${form.message}`;
-    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(false);
+
+    emailjs.sendForm(
+      "service_d6da80n",      // 🔁 remplace par ton Service ID
+      "template_oe1srhd",     // 🔁 remplace par ton Template ID
+      formRef.current,
+      "-bHHR-hvIsM-Rm5aa"       // 🔁 remplace par ta Public Key
+    )
+    .then(() => {
+      setLoading(false);
+      setSent(true);
+      setForm({ name: "", email: "", message: "" });
+    })
+    .catch(() => {
+      setLoading(false);
+      setError(true);
+    });
   };
 
   return (
     <div className="page" style={{ position: "relative", zIndex: 1 }}>
       <div className="page-header">
-       
-        <h1 className="page-title">Travaillons ensemble</h1>
-        <p className="page-subtitle">Je recherche une alternance à partir de septembre 2026 .</p>
+        <h1 className="page-title">Contact</h1>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }} className="reveal">
-
-        {/* Infos contact */}
-        <div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2rem" }}>
-            {[
-              { icon: "✉️", label: "Email", value: profile.email, href: `mailto:${profile.email}` },
-              { icon: "💼", label: "LinkedIn", value: "Voir mon profil", href: profile.linkedin },
-              { icon: "📍", label: "Localisation", value: profile.location, href: null },
-            ].map(c => (
-              <div key={c.label} className="card" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                <span style={{ fontSize: "1.3rem", flexShrink: 0 }}>{c.icon}</span>
-                <div>
-                  <div style={{ fontSize: "0.7rem", color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", fontWeight: 600 }}>{c.label}</div>
-                  {c.href ? (
-                    <a href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer"
-                      style={{ color: "var(--sky)", fontWeight: 600, fontSize: "0.9rem", textDecoration: "none" }}>{c.value}</a>
-                  ) : (
-                    <span style={{ color: "var(--white)", fontWeight: 500, fontSize: "0.9rem" }}>{c.value}</span>
-                  )}
-                </div>
-              </div>
-            ))}
+      <div style={{
+        maxWidth: "600px",
+        margin: "0 auto",
+        padding: "2rem 0"
+      }}>
+        {sent ? (
+          <div style={{
+            textAlign: "center",
+            padding: "3rem",
+            color: "#00bcd4"
+          }}>
+            <h2>Message envoyé ! ✅</h2>
+            <p style={{ marginTop: "1rem", color: "#aaa" }}>
+              Je vous répondrai dans les plus brefs délais.
+            </p>
+            <button
+              onClick={() => setSent(false)}
+              style={{
+                marginTop: "1.5rem",
+                padding: "0.75rem 2rem",
+                background: "transparent",
+                border: "1px solid #00bcd4",
+                color: "#00bcd4",
+                borderRadius: "8px",
+                cursor: "pointer"
+              }}
+            >
+              Envoyer un autre message
+            </button>
           </div>
-        </div>
-
-        {/* Formulaire */}
-        <div className="card">
-          <h3 style={{ fontWeight: 700, fontSize: "1rem", marginBottom: "1.5rem", color: "var(--sky)" }}>Envoyer un message</h3>
-
-          {sent ? (
-            <div style={{ textAlign: "center", padding: "2rem" }}>
-              <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>✅</div>
-              <p style={{ color: "var(--green)", fontWeight: 600 }}>Message envoyé !</p>
+        ) : (
+          <form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.25rem",
+              position: "relative",
+              zIndex: 2
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <label style={{ color: "#aaa", fontSize: "0.875rem" }}>
+                Votre nom
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Jean Dupont"
+                required
+                style={{
+                  padding: "0.875rem 1rem",
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: "8px",
+                  color: "#fff",
+                  fontSize: "1rem",
+                  outline: "none",
+                  pointerEvents: "all"
+                }}
+              />
             </div>
-          ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              {[
-                { key: "name", label: "Votre nom", type: "text", placeholder: "Nom et prénom" },
-                { key: "email", label: "Votre email", type: "email", placeholder: "nom@exemple.com" },
-              ].map(f => (
-                <div key={f.key}>
-                  <label style={{ fontSize: "0.78rem", color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "0.4rem" }}>{f.label}</label>
-                  <input
-                    type={f.type} placeholder={f.placeholder} value={form[f.key]}
-                    onChange={e => setForm({ ...form, [f.key]: e.target.value })}
-                    style={{
-                      width: "100%", padding: "0.75rem 1rem", borderRadius: 10,
-                      background: "rgba(255,255,255,0.04)", border: "1px solid rgba(56,189,248,0.2)",
-                      color: "var(--white)", fontFamily: "var(--font)", fontSize: "0.9rem",
-                      outline: "none", transition: "border-color 0.2s",
-                    }}
-                    onFocus={e => e.target.style.borderColor = "var(--sky)"}
-                    onBlur={e => e.target.style.borderColor = "rgba(56,189,248,0.2)"}
-                  />
-                </div>
-              ))}
-              <div>
-                <label style={{ fontSize: "0.78rem", color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase", display: "block", marginBottom: "0.4rem" }}>Message</label>
-                <textarea
-                  rows={5} placeholder="Votre message..." value={form.message}
-                  onChange={e => setForm({ ...form, message: e.target.value })}
-                  style={{
-                    width: "100%", padding: "0.75rem 1rem", borderRadius: 10,
-                    background: "rgba(255,255,255,0.04)", border: "1px solid rgba(56,189,248,0.2)",
-                    color: "var(--white)", fontFamily: "var(--font)", fontSize: "0.9rem",
-                    outline: "none", resize: "vertical", transition: "border-color 0.2s",
-                  }}
-                  onFocus={e => e.target.style.borderColor = "var(--sky)"}
-                  onBlur={e => e.target.style.borderColor = "rgba(56,189,248,0.2)"}
-                />
-                
-              </div>
-              <button onClick={handleSubmit} className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }}>
-                Envoyer →
-              </button>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <label style={{ color: "#aaa", fontSize: "0.875rem" }}>
+                Votre email
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="jean@exemple.com"
+                required
+                style={{
+                  padding: "0.875rem 1rem",
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: "8px",
+                  color: "#fff",
+                  fontSize: "1rem",
+                  outline: "none",
+                  pointerEvents: "all"
+                }}
+              />
             </div>
-          )}
-        </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <label style={{ color: "#aaa", fontSize: "0.875rem" }}>
+                Message
+              </label>
+              <textarea
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                placeholder="Votre message..."
+                required
+                rows={6}
+                style={{
+                  padding: "0.875rem 1rem",
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: "8px",
+                  color: "#fff",
+                  fontSize: "1rem",
+                  outline: "none",
+                  resize: "vertical",
+                  pointerEvents: "all",
+                  fontFamily: "inherit"
+                }}
+              />
+            </div>
+
+            {error && (
+              <p style={{ color: "#ff6b6b", fontSize: "0.875rem" }}>
+                ❌ Une erreur s'est produite. Vérifie tes clés EmailJS.
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                padding: "0.875rem 2rem",
+                background: loading ? "rgba(0,188,212,0.4)" : "#00bcd4",
+                border: "none",
+                borderRadius: "8px",
+                color: "#fff",
+                fontSize: "1rem",
+                fontWeight: "600",
+                cursor: loading ? "not-allowed" : "pointer",
+                transition: "all 0.2s ease",
+                pointerEvents: "all"
+              }}
+            >
+              {loading ? "Envoi en cours..." : "Envoyer le message"}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );
