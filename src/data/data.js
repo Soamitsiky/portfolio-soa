@@ -71,11 +71,11 @@ export const experiences = [
       {
         title: "Administration du cloud Microsoft 365",
         tasks: [
-          "Gestion des utilisateurs : création de comptes, attribution de licences, gestion des noms de domaine",
-          "Sécurité avec Defender : analyse des emails (spam/phishing), gestion des quarantaines, DMARC/DKIM/SPF",
-          "Gestion des boîtes mail avec Exchange : délégations, archivage",
-          "Administration des appareils via Intune : postes Windows et iOS, déploiement d'applications",
-          "Gestion des accès SharePoint et Azure / Entra ID",
+          "Gestion des utilisateurs ",
+          "Sécurité ",
+          "Gestion des boîtes mail ",
+          "Administration des appareils ",
+          "Gestion des accès ",
         ],
       },
       {
@@ -83,7 +83,7 @@ export const experiences = [
         tasks: [
           "Scripts de détection et mise à jour des navigateurs et applications",
           "Sauvegarde automatisée des tickets Jira",
-          "Configuration et gestion de machines virtuelles",
+         
         ],
       },
       {
@@ -103,7 +103,7 @@ export const experiences = [
         ],
       },
     ],
-    technologies: ["Microsoft Azure", "Microsoft 365", "Exchange", "Defender", "Intune", "SharePoint", "PowerShell", "Jira", "Confluence", "Hyper-V", "Snipe-IT"],
+    technologies: ["Microsoft Azure", "Microsoft 365 administration", "Exchange", "Defender", "Intune", "SharePoint", "PowerShell", "Jira", "Confluence", "Hyper-V", "Snipe-IT"],
   },
   {
     id: "anywr-stage",
@@ -150,14 +150,14 @@ export const experiences = [
       {
         title: "Conteneurisation & Déploiement",
         tasks: [
-          "Mise en place de la conteneurisation avec Docker",
+          
           "Création des Dockerfiles et docker-compose.yml (backend, frontend, BDD)",
-          "Déploiement des environnements de développement et production de l'application Eatzee",
+          
           "Structuration des environnements pour la reproductibilité des déploiements",
         ],
       },
     ],
-    technologies: ["Docker", "Docker Compose", "VS Code"],
+    technologies: ["Docker", "Docker Compose", "VS Code","Git"],
   },
 ];
 
@@ -165,6 +165,7 @@ export const projects = [
   {
     id: "kodolike",
     title: "KodoLike",
+    image: "/kodolike.jpg", 
     subtitle: "Startup Week IUT Lille",
     emoji: "🚀",
     color: "#38BDF8",

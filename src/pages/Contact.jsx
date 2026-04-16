@@ -46,7 +46,7 @@ export default function Contact() {
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "1.5rem" }}>
 
         <a
-          href="www.linkedin.com/in/soa-razakamboly-7016b0327"
+          href="https://www.linkedin.com/in/soa-razakamboly-7016b0327"
           target="_blank"
           rel="noopener noreferrer"
           style={{

@@ -4,38 +4,107 @@ import { useEffect } from "react";
 
 export default function Projects() {
   useEffect(() => {
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("revealed"); obs.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+    const obs = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("pj-visible")),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll(".pj-card-wrapper").forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, []);
 
   return (
-    <div className="page" style={{ position: "relative", zIndex: 1 }}>
-      <div className="page-header">
-      
-        <h1 className="page-title">Projets</h1>
-        <p className="page-subtitle">Cliquez sur un projet pour voir les détails techniques.</p>
-      </div>
+    <div style={{ minHeight: "100vh", padding: "6rem 2rem 4rem", maxWidth: "1100px", margin: "0 auto" }}>
+      <p style={{ color: "var(--sky)", fontFamily: "var(--mono)", fontSize: "0.8rem", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "0.5rem" }}>
+        Réalisations
+      </p>
+      <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 800, color: "var(--sky)", marginBottom: "0.75rem" }}>
+        Projets
+      </h1>
+      <p style={{ color: "#94a3b8", marginBottom: "3rem" }}>
+        Survolez une carte pour découvrir les détails techniques.
+      </p>
 
-      <div className="grid-2 reveal">
-        {projects.map(p => (
-          <Link key={p.id} to={`/projects/${p.id}`} style={{ textDecoration: "none" }}>
-            <div className="card" style={{ height: "100%", position: "relative", overflow: "hidden", borderLeft: `3px solid ${p.color}` }}>
-              <div style={{ position: "absolute", top: -10, right: -10, fontSize: "5rem", opacity: 0.05 }}>{p.emoji}</div>
-              <div style={{ width: 52, height: 52, borderRadius: 14, background: `${p.color}20`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", marginBottom: "1.2rem" }}>{p.emoji}</div>
-              <div style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: "0.3rem" }}>{p.title}</div>
-              <div style={{ color: p.color, fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "0.9rem" }}>{p.subtitle}</div>
-              <p style={{ color: "var(--muted)", fontSize: "0.88rem", lineHeight: 1.75, marginBottom: "1.2rem" }}>{p.description}</p>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
-                <span className={p.status === "Terminé" ? "status-badge status-done" : "status-badge status-wip"}>
-                  {p.status === "Terminé" ? "✓" : "⟳"} {p.status}
-                </span>
-                <span style={{ color: "var(--sky)", fontSize: "0.85rem", fontWeight: 600 }}>Voir le détail →</span>
+      <div className="pj-grid">
+        {projects.map((proj, i) => (
+          <div
+            className="pj-card-wrapper"
+            key={proj.id}
+            style={{ transitionDelay: `${i * 0.1}s` }}
+          >
+            <div className="pj-card">
+
+              {/* ── FACE AVANT ── */}
+              <div className="pj-face pj-front" style={{ borderColor: proj.color }}>
+                <span className="pj-bg-emoji">{proj.emoji}</span>
+                <div className="pj-front-top">
+                  <span
+                    className="pj-status"
+                    style={{
+                      background: proj.status === "Terminé" ? "rgba(52,211,153,0.15)" : "rgba(251,191,36,0.15)",
+                      color: proj.status === "Terminé" ? "#34D399" : "#FBBF24",
+                      border: `1px solid ${proj.status === "Terminé" ? "#34D39940" : "#FBBF2440"}`,
+                    }}
+                  >
+                    {proj.status === "Terminé" ? "✓ Terminé" : "⟳ En cours"}
+                  </span>
+                  <span className="pj-emoji-icon">{proj.emoji}</span>
+                </div>
+                <div className="pj-front-body">
+                  <h2 className="pj-title" style={{ color: proj.color }}>{proj.title}</h2>
+                  <p className="pj-subtitle">{proj.subtitle}</p>
+                  <p className="pj-summary">{proj.summary}</p>
+                </div>
+                <p className="pj-hint">Survolez pour les détails →</p>
+                <div className="pj-glow" style={{ background: proj.color }} />
               </div>
+
+              {/* ── FACE ARRIÈRE ── */}
+              <div className="pj-face pj-back" style={{ borderColor: proj.color }}>
+                <div className="pj-front-top">
+                  <h3 className="pj-back-title" style={{ color: proj.color }}>{proj.title}</h3>
+                  <span className="pj-emoji-icon">{proj.emoji}</span>
+                </div>
+                {Object.keys(proj.stack).length > 0 && (
+                  <div className="pj-stack-section">
+                    <p className="pj-stack-label" style={{ color: proj.color }}>Stack</p>
+                    <div className="pj-techs">
+                      {Object.values(proj.stack).flat().slice(0, 8).map((t) => (
+                        <span
+                          key={t}
+                          className="pj-tech"
+                          style={{ background: `${proj.color}12`, color: proj.color, border: `1px solid ${proj.color}30` }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                <div className="pj-back-links">
+                  <Link
+                    to={`/projects/${proj.id}`}
+                    className="pj-link"
+                    style={{ color: proj.color, borderColor: `${proj.color}50` }}
+                  >
+                    Voir le détail →
+                  </Link>
+                  {proj.demo && (
+                    <a
+                      href={proj.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pj-link"
+                      style={{ color: "#94a3b8", borderColor: "rgba(148,163,184,0.3)" }}
+                    >
+                      🔗 Demo
+                    </a>
+                  )}
+                </div>
+              </div>
+
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </div>
