@@ -16,7 +16,7 @@ import Recommendations from "./pages/Recommendations";
 import Contact from "./pages/Contact";
 import CV from "./pages/CV";
 import "./App.css";
-import Footer from "./components/Footer";
+
 
 
 export default function App() {
@@ -30,7 +30,7 @@ export default function App() {
         <ParticlesBg />
         <Navbar />
         <main>
-          <Footer />
+          
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -47,7 +47,7 @@ export default function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/cv" element={<CV />} />
             </Routes>
-          <Footer /> 
+         
         </main> 
       </div>
     </Router>

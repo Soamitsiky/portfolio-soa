@@ -37,9 +37,48 @@ export default function Contact() {
   return (
     <div className="page" style={{ position: "relative", zIndex: 1 }}>
       <div className="page-header">
+          {/* ─── Titre ─── */}
         <h1 className="page-title">Contact</h1>
       </div>
 
+ 
+        {/* ✅ 3. BOUTONS ICI — juste après le titre/sous-titre */}
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "1.5rem" }}>
+
+        <a
+          href="www.linkedin.com/in/soa-razakamboly-7016b0327"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            padding: "0.75rem 1.5rem",
+            background: "linear-gradient(135deg, #00c6ff, #0072ff)",
+            color: "#fff",
+            borderRadius: "999px",
+            fontWeight: "600",
+            textDecoration: "none",
+          }}
+        >
+          LinkedIn
+        </a>
+
+        <a
+          href="mailto:mitsikyraza@gmail.com"
+          style={{
+            padding: "0.75rem 1.5rem",
+            border: "2px solid #00c6ff",
+            color: "#00c6ff",
+            borderRadius: "999px",
+            fontWeight: "600",
+            textDecoration: "none",
+            background: "transparent",
+          }}
+        >
+          mitsikyraza@gmail.com
+        </a>
+
+      </div> 
+
+      {/* ─── Formulaire ─── */}
       <div style={{
         maxWidth: "600px",
         margin: "0 auto",
@@ -91,7 +130,7 @@ export default function Contact() {
                 name="name"
                 value={form.name}
                 onChange={handleChange}
-                placeholder="Jean Dupont"
+                placeholder="Nom"
                 required
                 style={{
                   padding: "0.875rem 1rem",
@@ -106,6 +145,10 @@ export default function Contact() {
               />
             </div>
 
+            
+  
+  
+
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               <label style={{ color: "#aaa", fontSize: "0.875rem" }}>
                 Votre email
@@ -115,7 +158,7 @@ export default function Contact() {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                placeholder="jean@exemple.com"
+                placeholder="nom@exemple.com"
                 required
                 style={{
                   padding: "0.875rem 1rem",
@@ -180,8 +223,38 @@ export default function Contact() {
             >
               {loading ? "Envoi en cours..." : "Envoyer le message"}
             </button>
+            
           </form>
+          
         )}
+        <footer
+  style={{
+    marginTop: "4rem",
+    paddingTop: "1.5rem",
+    borderTop: "1px solid rgba(255,255,255,0.08)",
+    color: "rgba(255,255,255,0.25)",
+    fontSize: "0.75rem",
+    lineHeight: "1.7",
+  }}
+>
+  <p>© 2026 Soa Razakamboly — Tous droits réservés</p>
+
+  <details style={{ marginTop: "0.4rem" }}>
+    <summary style={{ cursor: "pointer", opacity: 0.6 }}>
+      Mentions légales
+    </summary>
+
+    <p style={{ marginTop: "0.4rem" }}>
+      <strong>Éditeur :</strong> Soa M. Razakamboly — particulier
+    </p>
+    <p>
+      <strong>Contact :</strong> mitsikyraza@gmail.com
+    </p>
+    <p>
+      <strong>Hébergeur :</strong> GitHub Pages — GitHub, Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA
+    </p>
+  </details>
+</footer>
       </div>
     </div>
   );
